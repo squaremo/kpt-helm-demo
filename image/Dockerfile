@@ -5,7 +5,8 @@ ARG HELM_REPO=https://charts.fluxcd.io/
 
 # kpt gets used as a convenience by the script
 ADD https://storage.googleapis.com/kpt-dev/latest/linux_amd64/kpt /usr/local/bin/
-RUN chmod a+x /usr/local/bin/kpt
+ADD https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64 /usr/local/bin/yq
+RUN chmod a+x /usr/local/bin/kpt /usr/local/bin/yq
 
 # kpt wants git to be present, even if it doesn't use it
 RUN apk add git
