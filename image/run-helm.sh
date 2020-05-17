@@ -10,7 +10,8 @@ tee $DIR/input.yaml | kpt --stack-trace fn sink "$OUTDIR"
 
 CONFIG="$DIR/config.yaml"
 # Get functionConfig, if any, and extract some values from it.
-yq read $DIR/input.yaml 'functionConfig' > "$CONFIG"
+yq read "$DIR/input.yaml" 'functionConfig' > "$CONFIG"
+yq read "$CONFIG" 'data.values' > "$DIR/values.yaml"
 
 releasename=$(yq read "$CONFIG" 'data.releaseName')
 namespace=$(yq read "$CONFIG" 'data.namespace')
@@ -19,6 +20,7 @@ namespace=$(yq read "$CONFIG" 'data.namespace')
 # the file paths based on the names.
 helm template "${releasename}" ./*.tgz \
      --namespace "${namespace}" \
+     --values "$DIR/values.yaml" \
     | kpt fn source | kpt fn sink "$OUTDIR"
 # Write the resulting files back out on stdout
 kpt --stack-trace fn source "$OUTDIR"
