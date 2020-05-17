@@ -1,0 +1,7 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: Helm chart demo
+packageMetadata:
+  shortDescription: |
+    Shows how to bake a chart into an image for use with kpt fn
